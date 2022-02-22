@@ -18,7 +18,7 @@ metadata:
     capabilities: Basic Install
     operators.operatorframework.io/builder: operator-sdk-v1.14.0+git
     operators.operatorframework.io/project_layout: go.kubebuilder.io/v3
-  name: demo-operator.v0.0.1
+  name: demo-operator.v0.0.2
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -88,7 +88,7 @@ spec:
                   valueFrom:
                     fieldRef:
                       fieldPath: metadata.annotations['olm.targetNamespaces']
-                image: ricfeatherstone/demo-operator:v0.0.1
+                image: ricfeatherstone/demo-operator:v0.0.2
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -195,4 +195,5 @@ spec:
   provider:
     name: ricfeatherstone
     url: https://github.com/ricfeatherstone
-  version: 0.0.1
+  replaces: demo-operator.v0.0.1
+  version: 0.0.2

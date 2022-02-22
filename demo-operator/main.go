@@ -67,16 +67,24 @@ func main() {
 
 	ctrl.SetLogger(zap.New(zap.UseFlagOptions(&opts)))
 
-	targetNamespaces := strings.Split(os.Getenv("TARGET_NAMESPACES"), ",")
-	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), ctrl.Options{
+	options := ctrl.Options{
 		Scheme:                 scheme,
 		MetricsBindAddress:     metricsAddr,
 		Port:                   9443,
 		HealthProbeBindAddress: probeAddr,
 		LeaderElection:         enableLeaderElection,
 		LeaderElectionID:       "a07cf287.ricfeatherstone.com",
-		NewCache:               cache.MultiNamespacedCacheBuilder(targetNamespaces),
-	})
+	}
+
+	targetNamespacesString := os.Getenv("TARGET_NAMESPACES")
+	if targetNamespacesString == "" {
+		options.Namespace = targetNamespacesString
+	} else {
+		targetNamespaces := strings.Split(targetNamespacesString, ",")
+		options.NewCache = cache.MultiNamespacedCacheBuilder(targetNamespaces)
+	}
+
+	mgr, err := ctrl.NewManager(ctrl.GetConfigOrDie(), options)
 	if err != nil {
 		setupLog.Error(err, "unable to start manager")
 		os.Exit(1)

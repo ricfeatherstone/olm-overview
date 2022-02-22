@@ -43,4 +43,5 @@ spec:
   provider:
     name: ricfeatherstone
     url: https://github.com/ricfeatherstone
+  replaces: demo-operator.v0.0.1
   version: 0.0.0

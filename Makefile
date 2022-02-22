@@ -57,6 +57,10 @@ operator-create-watch-multiple-namespaces: operator-create-watched-namespaces
 	kubectl create ns $(NAMESPACE)
 	kubectl apply -k manifests/watch-multiple-namespaces
 
+operator-create-watch-all-namespaces:
+	kubectl create ns $(NAMESPACE)
+	kubectl apply -k manifests/watch-all-namespaces
+
 operator-delete:
 	kubectl delete ns $(NAMESPACE)
 
