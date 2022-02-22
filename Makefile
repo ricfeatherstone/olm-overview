@@ -61,6 +61,17 @@ operator-create-watch-all-namespaces:
 	kubectl create ns $(NAMESPACE)
 	kubectl apply -k manifests/watch-all-namespaces
 
+operator-create-installplan-manual-approval: ## Deploy the Demo Operator with Manual Approval
+	kubectl create ns $(NAMESPACE)
+	kubectl apply -k manifests/installplan-manual-approval
+
+operator-list-installplans: ## List the InstallPlans
+	kubectl -n $(NAMESPACE) get installplans.operators.coreos.com
+
+operator-approve-installplan: ## Patch an InstallPlan to approve INSTALL_PLAN=xxx
+	kubectl -n $(NAMESPACE) patch installplans.operators.coreos.com \
+		$(INSTALL_PLAN) --type merge --patch-file manifests/installplan-patch.yaml
+
 operator-delete:
 	kubectl delete ns $(NAMESPACE)
 
@@ -68,6 +79,11 @@ operator-logs:
 	kubectl -n $(NAMESPACE) logs \
 		-c manager \
 		$$(kubectl -n $(NAMESPACE) get po -l=control-plane=controller-manager -oname)
+
+operator-image: ## Display the Image for the currently deployed Demo Operator
+	kubectl -n $(NAMESPACE) get \
+		$$(kubectl -n $(NAMESPACE) get po -l=control-plane=controller-manager -oname) -ojson \
+		| jq .spec.containers[1].image
 
 ##@ Demo CR
 

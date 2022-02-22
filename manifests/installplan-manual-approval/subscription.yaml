@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: demo-operator
+spec:
+  name: demo-operator
+  source: rics-operators
+  sourceNamespace: olm
+  installPlanApproval: Manual
+  startingCSV: demo-operator.v0.0.2
