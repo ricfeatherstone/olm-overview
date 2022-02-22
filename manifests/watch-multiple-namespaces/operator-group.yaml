@@ -1,0 +1,9 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: demo-operator
+spec:
+  targetNamespaces:
+    - watched-namespace-1
+    - watched-namespace-2
+    - watched-namespace-3

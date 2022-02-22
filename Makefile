@@ -48,6 +48,15 @@ operator-create-watch-own-namespace:
 	kubectl create ns $(NAMESPACE)
 	kubectl apply -k manifests/watch-own-namespace
 
+operator-create-watched-namespaces:
+	-for i in 1 2 3; do \
+		kubectl create ns watched-namespace-$$i; \
+	done
+
+operator-create-watch-multiple-namespaces: operator-create-watched-namespaces
+	kubectl create ns $(NAMESPACE)
+	kubectl apply -k manifests/watch-multiple-namespaces
+
 operator-delete:
 	kubectl delete ns $(NAMESPACE)
 
