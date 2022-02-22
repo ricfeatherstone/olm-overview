@@ -24,6 +24,8 @@ import (
 type NoopSpec struct {
 	// Foo is an example field of Noop.
 	Foo string `json:"foo"`
+	// Bar is an example field of Noop.
+	Bar string `json:"bar,omitempty"`
 }
 
 // NoopStatus defines the observed state of Noop

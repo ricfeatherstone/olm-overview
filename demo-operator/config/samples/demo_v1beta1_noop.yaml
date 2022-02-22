@@ -4,3 +4,4 @@ metadata:
   name: noop-sample
 spec:
   foo: Hello
+  bar: World

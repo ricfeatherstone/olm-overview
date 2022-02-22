@@ -61,7 +61,7 @@ func (r *NoopReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.
 		return ctrl.Result{}, err
 	}
 
-	logger.Info("Reconciling Foo.", "Foo", noop.Spec.Foo)
+	logger.Info("Reconciling Foo.", "Foo", noop.Spec.Foo, "Bar", noop.Spec.Bar)
 
 	return ctrl.Result{}, nil
 }
