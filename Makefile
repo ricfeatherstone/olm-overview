@@ -36,3 +36,11 @@ olm-dump: ## Get Manifests for OLM installed CatalogSource and OperatorGroups
 	kubectl -n olm get catalogsource operatorhubio-catalog -oyaml > olm/catalog.yaml
 	kubectl -n olm get operatorgroup olm-operators -oyaml > olm/olm-operators.yaml
 	kubectl -n operators get operatorgroup global-operators -oyaml > olm/global-operators.yaml
+
+##@ Demo Operator
+
+operator-catalog-create: ## Create CatalogSource
+	kubectl apply -f manifests/catalog-source.yaml
+
+operator-catalog-delete: ## Delete CatalogSource
+	kubectl delete -f manifests/catalog-source.yaml
