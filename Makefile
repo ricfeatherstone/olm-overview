@@ -10,7 +10,6 @@ help: ## Display this help.
 
 cluster-create: ## Create Cluster
 	kind create cluster --name $(NAME)
-	kubectl create ns $(NAMESPACE)
 
 cluster-delete: ## Delete Cluster
 	kind delete cluster --name $(NAME)
@@ -44,3 +43,23 @@ operator-catalog-create: ## Create CatalogSource
 
 operator-catalog-delete: ## Delete CatalogSource
 	kubectl delete -f manifests/catalog-source.yaml
+
+operator-create-watch-own-namespace:
+	kubectl create ns $(NAMESPACE)
+	kubectl apply -k manifests/watch-own-namespace
+
+operator-delete:
+	kubectl delete ns $(NAMESPACE)
+
+operator-logs:
+	kubectl -n $(NAMESPACE) logs \
+		-c manager \
+		$$(kubectl -n $(NAMESPACE) get po -l=control-plane=controller-manager -oname)
+
+##@ Demo CR
+
+cr-create: ## Create CR - NAMESPACE=xxx
+	-kubectl -n $(NAMESPACE) create -f demo-operator/config/samples/demo_v1beta1_noop.yaml
+
+cr-delete: ## Delete CR - NAMESPACE=xxx
+	-kubectl -n $(NAMESPACE) delete -f demo-operator/config/samples/demo_v1beta1_noop.yaml
