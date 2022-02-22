@@ -44,20 +44,20 @@ operator-catalog-create: ## Create CatalogSource
 operator-catalog-delete: ## Delete CatalogSource
 	kubectl delete -f manifests/catalog-source.yaml
 
-operator-create-watch-own-namespace:
+operator-create-watch-own-namespace: ## Deploy Demo Operator to watch own namespace
 	kubectl create ns $(NAMESPACE)
 	kubectl apply -k manifests/watch-own-namespace
 
-operator-create-watched-namespaces:
+operator-create-watched-namespaces: ## Create namespaces to be watched by the Demo Operator
 	-for i in 1 2 3; do \
 		kubectl create ns watched-namespace-$$i; \
 	done
 
-operator-create-watch-multiple-namespaces: operator-create-watched-namespaces
+operator-create-watch-multiple-namespaces: operator-create-watched-namespaces ## Deploy the Demo Operator to watch multiple namespaces
 	kubectl create ns $(NAMESPACE)
 	kubectl apply -k manifests/watch-multiple-namespaces
 
-operator-create-watch-all-namespaces:
+operator-create-watch-all-namespaces: ## Deploy the Demo Operator to watch all namespaces
 	kubectl create ns $(NAMESPACE)
 	kubectl apply -k manifests/watch-all-namespaces
 
@@ -65,22 +65,22 @@ operator-create-installplan-manual-approval: ## Deploy the Demo Operator with Ma
 	kubectl create ns $(NAMESPACE)
 	kubectl apply -k manifests/installplan-manual-approval
 
-operator-list-installplans: ## List the InstallPlans
+operator-list-installplans: ## List InstallPlans
 	kubectl -n $(NAMESPACE) get installplans.operators.coreos.com
 
-operator-approve-installplan: ## Patch an InstallPlan to approve INSTALL_PLAN=xxx
+operator-approve-installplan: ## Approve an InstallPlan INSTALL_PLAN=xxx
 	kubectl -n $(NAMESPACE) patch installplans.operators.coreos.com \
 		$(INSTALL_PLAN) --type merge --patch-file manifests/installplan-patch.yaml
 
-operator-delete:
+operator-delete: ## Delete the Demo Operator and all configuration
 	kubectl delete ns $(NAMESPACE)
 
-operator-logs:
+operator-logs: ## Display the Demo Operator logs
 	kubectl -n $(NAMESPACE) logs \
 		-c manager \
 		$$(kubectl -n $(NAMESPACE) get po -l=control-plane=controller-manager -oname)
 
-operator-image: ## Display the Image for the currently deployed Demo Operator
+operator-image: ## Display the current Demo Operator Image
 	kubectl -n $(NAMESPACE) get \
 		$$(kubectl -n $(NAMESPACE) get po -l=control-plane=controller-manager -oname) -ojson \
 		| jq .spec.containers[1].image
