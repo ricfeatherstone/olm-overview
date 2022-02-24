@@ -44,8 +44,10 @@ operator-catalog-create: ## Create CatalogSource
 operator-catalog-delete: ## Delete CatalogSource
 	kubectl delete -f manifests/catalog-source.yaml
 
-operator-create-watch-own-namespace: ## Deploy Demo Operator to watch own namespace
+operator-create-deployment-namespace: ## Create Namespace to deploy Operator into
 	kubectl create ns $(NAMESPACE)
+
+operator-create-watch-own-namespace: operator-create-deployment-namespace ## Deploy Demo Operator to watch own namespace
 	kubectl apply -k manifests/watch-own-namespace
 
 operator-create-watched-namespaces: ## Create namespaces to be watched by the Demo Operator
@@ -53,16 +55,13 @@ operator-create-watched-namespaces: ## Create namespaces to be watched by the De
 		kubectl create ns watched-namespace-$$i; \
 	done
 
-operator-create-watch-multiple-namespaces: operator-create-watched-namespaces ## Deploy the Demo Operator to watch multiple namespaces
-	kubectl create ns $(NAMESPACE)
+operator-create-watch-multiple-namespaces: operator-create-deployment-namespace operator-create-watched-namespaces ## Deploy the Demo Operator to watch multiple namespaces
 	kubectl apply -k manifests/watch-multiple-namespaces
 
-operator-create-watch-all-namespaces: ## Deploy the Demo Operator to watch all namespaces
-	kubectl create ns $(NAMESPACE)
+operator-create-watch-all-namespaces: operator-create-deployment-namespace ## Deploy the Demo Operator to watch all namespaces
 	kubectl apply -k manifests/watch-all-namespaces
 
-operator-create-installplan-manual-approval: ## Deploy the Demo Operator with Manual Approval
-	kubectl create ns $(NAMESPACE)
+operator-create-installplan-manual-approval: operator-create-deployment-namespace ## Deploy the Demo Operator with Manual Approval
 	kubectl apply -k manifests/installplan-manual-approval
 
 operator-list-installplans: ## List InstallPlans
