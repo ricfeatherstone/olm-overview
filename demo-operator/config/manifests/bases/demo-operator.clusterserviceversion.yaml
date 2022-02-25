@@ -1,0 +1,46 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: demo-operator.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions:
+    owned:
+    - description: Noop is the Schema for the noops API
+      displayName: Noop
+      kind: Noop
+      name: noops.demo.ricfeatherstone.com
+      version: v1beta1
+  description: Simple demonstration purposes
+  displayName: Demo Operator
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: true
+    type: OwnNamespace
+  - supported: true
+    type: SingleNamespace
+  - supported: true
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - operator-sdk
+  - olm
+  links:
+  - name: Demo Operator
+    url: https://github.com/ricfeatherstone/olm-overview/demo-operator
+  maturity: alpha
+  provider:
+    name: ricfeatherstone
+    url: https://github.com/ricfeatherstone
+  version: 0.0.0

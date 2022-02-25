@@ -1,0 +1,6 @@
+apiVersion: demo.ricfeatherstone.com/v1beta1
+kind: Noop
+metadata:
+  name: noop-sample
+spec:
+  foo: Hello

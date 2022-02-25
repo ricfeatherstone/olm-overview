@@ -1,0 +1,24 @@
+# permissions for end users to edit noops.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: noop-editor-role
+rules:
+- apiGroups:
+  - demo.ricfeatherstone.com
+  resources:
+  - noops
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - demo.ricfeatherstone.com
+  resources:
+  - noops/status
+  verbs:
+  - get
