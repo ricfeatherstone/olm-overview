@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: demo-operator-system
+commonLabels:
+  app.kubernetes.io/name: demo-operator
+  app.kubernetes.io/part-of: demo-operator
+resources:
+  - operator-group.yaml
+  - subscription.yaml

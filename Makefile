@@ -71,6 +71,9 @@ operator-approve-installplan: ## Approve an InstallPlan INSTALL_PLAN=xxx
 	kubectl -n $(NAMESPACE) patch installplans.operators.coreos.com \
 		$(INSTALL_PLAN) --type merge --patch-file manifests/installplan-patch.yaml
 
+operator-create-configure-resources: operator-create-deployment-namespace ## Deploy the Demo Operator with resource requests and limits modified
+	kubectl apply -k manifests/configure-resources
+
 operator-delete: ## Delete the Demo Operator and all configuration
 	kubectl delete ns $(NAMESPACE)
 
