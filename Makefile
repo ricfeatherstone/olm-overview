@@ -75,7 +75,10 @@ operator-create-configure-resources: operator-create-deployment-namespace ## Dep
 	kubectl apply -k manifests/configure-resources
 
 operator-delete: ## Delete the Demo Operator and all configuration
-	kubectl delete ns $(NAMESPACE)
+	-kubectl delete ns $(NAMESPACE)
+	-for i in 1 2 3; do \
+		kubectl delete ns watched-namespace-$$i; \
+	done
 
 operator-logs: ## Display the Demo Operator logs
 	kubectl -n $(NAMESPACE) logs \
